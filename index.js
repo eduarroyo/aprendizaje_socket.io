@@ -12,9 +12,7 @@ var
 app = express();
 app.get('/', function (req, res) {
     'use strict';
-    // Ante una solicitud de la ruta raíz, la app devuelve el título hello world.
-    console.log("Solicitud recibida");
-    res.send('<h1>Hello world</h1>');
+    res.sendFile(__dirname + '/views/index.html');
 });
 
 // Inicializar el servidor y ponerlo a escuchar el puerto 3000.
