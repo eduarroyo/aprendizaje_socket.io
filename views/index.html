@@ -1,22 +1,53 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>Socket.IO chat</title>
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
     </style>
-  </head>
-  <body>
+    <script src="/socket.io/socket.io.js"></script>
+    
+</head>
+<body>
     <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+    <form action="" id="formMensaje">
+        <input id="m" autocomplete="off" /><button>Send</button>
     </form>
-  </body>
+
+    <script type="text/javascript">
+        // Cliente para el servicio socket.io
+        var socket = io();
+
+        // Mantener el elemento del DOM para la lista de mensajes.
+        // Aquí iremos añadiendo los mensajes recibidos.
+        var listaMensajes = document.getElementById('messages');
+
+        // Captural el evento de mesnajes recibidos del servicio socket.io
+        // Cada vez que se produzca, añadiremos un mensaje a la lista de mensajes.
+        socket.on('chat message', function(msg){
+            var mensaje = document.createElement("li");
+            mensaje.innerHTML = msg;
+            listaMensajes.appendChild(mensaje);
+        });
+
+        // Capturar el evento submit del formulario.
+        var form = document.getElementById('formMensaje');
+        form.addEventListener("submit", function(ev){
+            ev.preventDefault(); // Prevenir submit normal del form.
+
+            // Enviar el mensaje a través del servicio socket.io y limpiar
+            // la caja de texto.
+            var inputMensaje = document.getElementById('m');
+            socket.emit('chat message', inputMensaje.value);
+            inputMensaje.value = '';
+        });
+    </script>
+</body>
 </html>

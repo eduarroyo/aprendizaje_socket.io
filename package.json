@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/eduarroyo/aprendizaje_socket.io#readme",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
   }
 }
