@@ -20,7 +20,7 @@ function conexionUsuario(clientID) {
     return usuario;
 }
 
-function eventosEntrada(clientID, usuario) {
+function eventosEntrada(socket, clientID, usuario) {
     'use strict';
     return [
         {
@@ -36,7 +36,10 @@ function eventosEntrada(clientID, usuario) {
             handler: function (data) {
                 conexionUsuario(clientID);
                 console.log('Nuevo mensaje: ' + data);
-                _sio.emit('chat message', usuario.nombre + " dice: " + data);
+
+                // socket.broadcast.emit envía el evento a todos los clientes menos al del socket.
+                // _sio.emit envía el evento a todos.
+                socket.broadcast.emit('chat message', usuario.nombre + " dice: " + data);
                 _sio.emit('online users', _usuariosConectados);
             }
         },
@@ -65,7 +68,7 @@ function init(sio) {
         usuario = nuevoUsuario(clientID);
         console.log("Cliente conectado:", clientID);
         // Registrar los eventos del servidor socketio
-        eventos = eventosEntrada(clientID, usuario);
+        eventos = eventosEntrada(socket, clientID, usuario);
         eventos.forEach(function (ev) {
             socket.on(ev.name, ev.handler);
         });

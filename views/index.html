@@ -102,12 +102,16 @@
         // Aquí iremos añadiendo los mensajes recibidos.
         var listaMensajes = document.getElementById('messages');
 
-        // Capturar el evento de mesnajes recibidos del servicio socket.io
-        // Cada vez que se produzca, añadiremos un mensaje a la lista de mensajes.
-        socket.on('chat message', function(msg){
+        function nuevoMensaje(msg) {
             var mensaje = document.createElement("li");
             mensaje.innerHTML = msg;
             listaMensajes.appendChild(mensaje);
+        }
+
+        // Capturar el evento de mesnajes recibidos del servicio socket.io
+        // Cada vez que se produzca, añadiremos un mensaje a la lista de mensajes.
+        socket.on('chat message', function(msg){
+            nuevoMensaje(msg);
         });
 
         socket.on('online users', function(users) {
@@ -137,7 +141,9 @@
             // Enviar el mensaje a través del servicio socket.io y limpiar
             // la caja de texto.
             var inputMensaje = document.getElementById('mensaje');
-            socket.emit('chat message', inputMensaje.value);
+            var mensaje = inputMensaje.value;
+            nuevoMensaje(mensaje);
+            socket.emit('chat message', mensaje);
             inputMensaje.value = '';
         });
 
