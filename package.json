@@ -1,0 +1,24 @@
+{
+  "name": "aprendizaje_socket.io",
+  "version": "1.0.0",
+  "description": "Proyecto de aprendizaje de socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduarroyo/aprendizaje_socket.io.git"
+  },
+  "keywords": [
+    "node",
+    "socket",
+    "learn"
+  ],
+  "author": "Eduardo Arroyo Ramírez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eduarroyo/aprendizaje_socket.io/issues"
+  },
+  "homepage": "https://github.com/eduarroyo/aprendizaje_socket.io#readme"
+}
